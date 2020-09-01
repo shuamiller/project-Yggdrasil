@@ -127,13 +127,16 @@ body {
 
 h1 {
     font-family: "Montserrat", monospace;
-    font-weight: 100;
+    font-weight: 200;
     font-style: italic;
     font-size: 5em;
     text-align: center;
     color: whitesmoke;
     margin: .75em auto .2em;
     ;
+}
+.header-span {
+    color: gold;
 }
 #subtitle {
     font-family: "Fira Code", monospace;
