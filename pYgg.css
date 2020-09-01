@@ -110,3 +110,37 @@
     font-weight: 900;
     font-style: italic;
 }
+
+body {
+    background-color: rgb(41, 41, 41);
+}
+
+#header-div {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    width: 75%;
+}
+
+h1 {
+    font-family: "Montserrat", monospace;
+    font-weight: 100;
+    font-style: italic;
+    font-size: 5em;
+    text-align: center;
+    color: whitesmoke;
+    margin: .75em auto .2em;
+    ;
+}
+#subtitle {
+    font-family: "Fira Code", monospace;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1.25em;
+    text-align: center;
+    color: whitesmoke;
+    margin: 0;
+}
