@@ -155,36 +155,57 @@ h1 {
 }
 #game-info {
     position: relative;
-    top: 1.5em;
+    top: 1.75em;
     background-color: rgb(66, 66, 66);
     width: 87em;
-    height: 30em;
+    height: 28em;
     margin: auto;
     border-radius: .5em;
 }
-#game-text {
+#text-div {
     display: block;
     position: relative;
+    top: 2em;
     margin: auto;
-    background-color: tomato;
+    border-radius: .5em;
+    width: 83em;
+    height: 24em;
+}
+#game-text {
     font-family: "Montserrat";
     font-size: 1.5em;
     color: wheat;
-    width: 57em;
-    height: 18em;
+
 }
 #player-interface {
-
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 3em;
+    background-color: rgb(66, 66, 66);
+    width: 87em;
+    height: 5em;
+    margin: auto;
+    border-radius: .5em;
 }
 #label-div {
-
+    display: flex;
+    align-items: center;
+    margin: 0 2em;
 }
 #question {
-
+    font-family: "Fira Code", monospace;
+    font-size: 1.75em;
+    color: whitesmoke;
 }
 #input-div {
-
+    display: flex;
+    align-items: center;
 }
 #player-input {
-    
+    border-radius: .5em;
+    width: 60em;
+    height: 3em;
+    border-style: none;
+    background-color: rgb(41, 41, 41);
 }
