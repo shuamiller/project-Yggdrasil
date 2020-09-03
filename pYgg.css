@@ -132,7 +132,7 @@ h1 {
     font-size: 5em;
     text-align: center;
     color: whitesmoke;
-    margin: .75em auto .2em;
+    margin: .25em auto .2em;
     ;
 }
 .header-span {
@@ -145,16 +145,33 @@ h1 {
     font-size: 1.25em;
     text-align: center;
     color: whitesmoke;
-    margin: 0;
+    margin: 0 auto 2em;
 }
 #console {
-
+    background-color: grey;
+    margin: 1em;
+    height: 38em;
+    border-radius: .5em;
 }
 #game-info {
-
+    position: relative;
+    top: 1.5em;
+    background-color: rgb(66, 66, 66);
+    width: 87em;
+    height: 30em;
+    margin: auto;
+    border-radius: .5em;
 }
 #game-text {
-
+    display: block;
+    position: relative;
+    margin: auto;
+    background-color: tomato;
+    font-family: "Montserrat";
+    font-size: 1.5em;
+    color: wheat;
+    width: 57em;
+    height: 18em;
 }
 #player-interface {
 
