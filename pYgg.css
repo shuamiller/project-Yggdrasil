@@ -207,6 +207,20 @@ h1 {
     margin: auto;
     border-radius: .5em;
 }
+#begin-div {
+    display: flex;
+    align-items: center;
+    margin: 0 2em;
+}
+#begin-button {
+    font-family: "Fira Code", monospace;
+    font-size: 1.75em;
+    width: 5em;
+    background-color: wheat;
+    color: rgb(41, 41, 41);
+    border-style: none;
+    border-radius: .25em;
+}
 #label-div {
     display: flex;
     align-items: center;
@@ -215,7 +229,7 @@ h1 {
 #question {
     font-family: "Fira Code", monospace;
     font-size: 1.75em;
-    color: whitesmoke;
+    color: wheat;
 }
 #input-div {
     display: flex;
