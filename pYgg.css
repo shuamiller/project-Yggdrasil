@@ -136,7 +136,7 @@ h1 {
     ;
 }
 .header-span {
-    color: gold;
+    color: goldenrod;
 }
 #subtitle {
     font-family: "Fira Code", monospace;
@@ -181,13 +181,20 @@ h1 {
     color: whitesmoke;
 }
 .character-text {
-
+    font-family: "Fira Code", monospace;
+    color: rgb(150, 63, 63);
 }
 .object-text {
-
+    font-family: "Fira Code", monospace;
+    color: rgb(97, 91, 134);
 }
 .location-text {
-    
+    font-family: "Fira Code", monospace;
+    color: darkolivegreen;
+}
+.ask-text {
+    font-family: "Fira Code", monospace;
+    color: goldenrod;
 }
 #player-interface {
     display: flex;
