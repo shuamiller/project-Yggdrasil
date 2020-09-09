@@ -19,7 +19,7 @@ beginBtn.addEventListener('click', () => {
     }
     const gameText = document.createElement('p');
     gameText.setAttribute('class', 'game-text');
-    gameText.textContent = "You find yourself in a room of smooth stone the color of sand. You don't remember how you came to be here. You don't remember who you are.\n This room seems to be illuminated without a source. Ahead of you, there is a recessed wall that could be a doorway, but there is no opening. To the left of the recess, a circular portal of dark glass is set in the wall.";
+    gameText.textContent = `You find yourself in a room of smooth stone the color of sand. You don't remember how you came to be here. You don't remember who you are.\n This room seems to be illuminated without a source. Ahead of you, there is a recessed wall that could be a doorway, but there is no opening. To the left of the recess, a circular portal of dark glass is set in the wall.`;
     textDiv.appendChild(gameText);
 })
 
