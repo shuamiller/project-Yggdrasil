@@ -13,7 +13,7 @@ let entryPoint = {
     This room seems to be illuminated without a source. Ahead of you, there is a\
     recessed wall that could be a doorway, but there is no opening. To the left\
     of the recess, a circular portal of dark glass is set in the wall.",
-    'dbjects': [
+    'objects': [
         doorway,
         darkGlass
     ],
