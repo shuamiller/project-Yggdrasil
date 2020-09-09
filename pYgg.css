@@ -171,11 +171,23 @@ h1 {
     width: 83em;
     height: 24em;
 }
-#game-text {
-    font-family: "Montserrat";
+#welcome-message {
     font-size: 1.5em;
     color: wheat;
+}
+.game-text {
+    font-family: "Montserrat";
+    font-size: 1.2em;
+    color: whitesmoke;
+}
+.character-text {
 
+}
+.object-text {
+
+}
+.location-text {
+    
 }
 #player-interface {
     display: flex;
