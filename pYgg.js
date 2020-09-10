@@ -7,6 +7,10 @@ const gameInfo = document.querySelector('#game-info');
 let currentRoom;
 let currentWorld;
 
+let playerCharacter = {
+    name: "",
+    inventory: [],
+}
 
 let doorway = {
 
