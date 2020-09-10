@@ -16,7 +16,7 @@ let doorway = {
     description: "A smooth surface, the same color and texture as the rest of the room but recessed into the north wall.",
     openText: "It doesn't appear to open in any way.",
     pushText: "You push against the flat surface, but it doesn't give.",
-    pullTtext: "There isn't any way to pull it.",
+    pullText: "There isn't any way to pull it.",
     dialogue: ["It says nothing.", "It still says nothing..."]
 };
 
