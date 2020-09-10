@@ -4,6 +4,7 @@ const textDiv = document.querySelector("#text-div");
 const playerInterface = document.querySelector("#player-interface");
 const inputDiv = document.querySelector("#input-div");
 let currentRoom;
+let currentWorld;
 
 
 let doorway = {
@@ -56,4 +57,6 @@ beginBtn.addEventListener('click', () => {
     gameText.setAttribute('class', 'game-text');
     gameText.textContent = entryPoint.description;
     textDiv.appendChild(gameText);
+    currentRoom = entryPoint;
+    currentWorld = "Worlds[0]";
 });
