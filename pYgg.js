@@ -65,13 +65,15 @@ beginBtn.addEventListener('click', () => {
     const worldLocation = document.createElement('div');
     worldLocation.setAttribute('id', 'world-location');
     const worldText = document.createElement('p');
-    worldText.setAttribute('class', 'location-text');
+    worldText.setAttribute('id', 'world-text');
+    worldText.setAttribute('class', 'location-header');
     worldLocation.appendChild(worldText);
     locationDiv.appendChild(worldLocation);
     const roomLocation = document.createElement('div');
     roomLocation.setAttribute('id', 'room-location');
     const roomText = document.createElement('p');
-    roomText.setAttribute('class', 'location-text');
+    roomText.setAttribute('id', 'room-text');
+    roomText.setAttribute('class', 'location-header');
     roomLocation.appendChild(roomText);
     locationDiv.appendChild(roomLocation);
     gameInfo.insertBefore(locationDiv, textDiv);
