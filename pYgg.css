@@ -179,6 +179,8 @@ h1 {
     font-family: "Montserrat";
     font-size: 1.2em;
     color: whitesmoke;
+    line-height: 1.6;
+    white-space: pre-line;
 }
 .character-text {
     font-family: "Fira Code", monospace;
