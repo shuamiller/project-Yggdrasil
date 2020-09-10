@@ -162,11 +162,32 @@ h1 {
     margin: auto;
     border-radius: .5em;
 }
+#location-div {
+    display: flex;
+    position: relative;
+    top: 1em;
+    justify-content: space-between;
+    margin: 3em 2em 0;
+    padding: 0;
+}
+#worldLocation {
+    display: block;
+    margin: 0;
+}
+#roomLocation {
+    display: block;
+    margin: 0;
+}
+.location-header {
+    font-family: "Fira Code", monospace;
+    font-size: 1.2em;
+    color: darkolivegreen;
+    margin: 0;
+}
 #text-div {
     display: block;
     position: relative;
-    top: 3em;
-    margin: auto;
+    margin: 0 auto;
     border-radius: .5em;
     width: 83em;
     height: 24em;
@@ -181,6 +202,7 @@ h1 {
     color: whitesmoke;
     line-height: 1.6;
     white-space: pre-line;
+    text-align: justify;
 }
 .character-text {
     font-family: "Fira Code", monospace;
