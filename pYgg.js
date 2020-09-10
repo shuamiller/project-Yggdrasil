@@ -32,16 +32,15 @@ let entryPoint = {
     ]
 };
 
-let Worlds = [
-    { //Worlds[0]
-        'Rooms': [
-            entryPoint
-        ] 
-    }
-]
+let worlds0 = {
+    name: "Worlds[0]",
+    rooms: [
+        entryPoint
+    ] 
+}
 
 
-beginBtn.addEventListener('click', () => {
+function replaceButton() {
     playerInterface.removeChild(beginDiv);
     const labelDiv = document.createElement('div');
     labelDiv.setAttribute('id', 'label-div');
@@ -51,15 +50,30 @@ beginBtn.addEventListener('click', () => {
     question.textContent = "What Will You Do?"
     labelDiv.appendChild(question);
     playerInterface.insertBefore(labelDiv, inputDiv);
-    while (textDiv.firstChild) {
-        textDiv.removeChild(textDiv.firstChild);
+}
+
+function removeChildren(parent) {
+    while(parent.firstChild) {
+        parent.removeChild(parent.firstChild);
     }
+}
+
+function appendGameText() {
     const gameText = document.createElement('p');
     gameText.setAttribute('class', 'game-text');
     gameText.textContent = entryPoint.description;
     textDiv.appendChild(gameText);
-    currentRoom = entryPoint.name;
-    currentWorld = "Worlds[0]";
+}
+
+function setRoomLocation(room) {
+    currentRoom = room.name;
+}
+
+function setWorldLocation(world) {
+    currentWorld = world.name;
+}
+
+function createLocationHeader() {
     const locationDiv = document.createElement('div');
     locationDiv.setAttribute('id', 'location-div');
     const worldLocation = document.createElement('div');
@@ -79,4 +93,13 @@ beginBtn.addEventListener('click', () => {
     gameInfo.insertBefore(locationDiv, textDiv);
     worldText.textContent = currentWorld;
     roomText.textContent = currentRoom;
+};
+
+beginBtn.addEventListener('click', () => {
+    replaceButton();
+    removeChildren(textDiv);
+    appendGameText();
+    setRoomLocation(entryPoint);
+    setWorldLocation(worlds0);
+    createLocationHeader();
 });
