@@ -21,7 +21,7 @@ let doorway = {
 };
 
 let darkGlass = {
-
+    description: "A circular portal of dark glass set into the wall. It is about the size of your head. As you look at it, the glass-like surface begins to ripple suddenly. You hear a voice come from the portal. As the voice speaks, the ripple grows. 'Welcome, Pilgrim. I am the Herald of Yggdrasil. We haven't had a new arrival in some time. What is your name?'"
 };
 
 let heraldOfYggdrasil = {
