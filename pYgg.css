@@ -266,3 +266,17 @@ h1 {
     border-style: none;
     background-color: rgb(41, 41, 41);
 }
+#submit-div {
+    display: flex;
+    align-items: center;
+    margin: 0 2em;
+}
+#submit-button {
+    background-color: goldenrod;
+    color: whitesmoke;
+    font-family: Montserrat;
+    width: 5em;
+    height: 3em;
+    border-radius: .5em;
+    border-style: none;
+}
