@@ -324,4 +324,7 @@ function talkToAspect(aspect) {
     } else {
         gameText.textContent = aspect.dialogue[0]; 
     }
+    if (aspect.talkFunction) {
+        aspect.talkFunction();
+    }
 }
