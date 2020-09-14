@@ -176,6 +176,28 @@ function getReceiver(array) {
     return camelStr;
 }
 
+function getAspect1(array) {
+    let withIndex = array.indexOf('with')
+    let str = ""
+    for (let i = 1; i < withIndex; i++) {
+        str = str + array[i] + " ";
+    }
+    let trimmedStr = str.trim();
+    let camelStr = camelCase(trimmedStr);
+    return camelStr;
+}
+
+function getAspect2(array) {
+    let withIndex = array.indexOf('with')
+    let str = ""
+    for (let i = withIndex + 1; i < array.length; i++) {
+        str = str + array[i] + " ";
+    }
+    let trimmedStr = str.trim();
+    let camelStr = camelCase(trimmedStr);
+    return camelStr;
+}
+
 function determineAction() {
     makeArray();
     let aspect = ""
@@ -208,12 +230,13 @@ function determineAction() {
         talkToAspect(aspect);
     }
     if (inputArray[0] === "give") {
-        getGivenAspect(inputArray);
-        getReceiver(inputArray);
+        let aspect = getGivenAspect(inputArray);
+        let receiver = getReceiver(inputArray);
         giveAspect(aspect, receiver);
     }
     if (inputArray[0] === "use") {
-        
+        let aspect1 = getAspect1(inputArray);
+        let aspect2 = getAspect2(inputArray);
         useAspect(aspect1, aspect2);
     }
     if (inputArray[0] === "?") {
