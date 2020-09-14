@@ -284,3 +284,7 @@ function takeAspect(aspect) {
     playerCharacter.inventory[aspect] = aspect;
     delete currentRoom.objects.aspect;
 }
+
+function openAspect(aspect) {
+    gameText.textContent = aspect.openText;
+}
