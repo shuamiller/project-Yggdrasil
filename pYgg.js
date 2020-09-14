@@ -20,6 +20,7 @@ let doorway = {
     pushText: "You push against the flat surface, but it doesn't give.",
     pullText: "There isn't any way to pull it.",
     dialogue: ["It says nothing.", "It still says nothing..."],
+    removedDialogue: [],
     directionalAccess: false
 };
 
@@ -273,18 +274,54 @@ function walkDirection(aspect) {
     } else {
         enterRoom(aspect);
     }
+    if (aspect.walkFunction) {
+        aspect.walkFunction();
+    }
 }
 
 function examineAspect(aspect) {
     gameText.textContent = aspect.description;
+    if (aspect.examinationFunction) {
+        aspect.examinationFunction();
+    }
 }
 
 function takeAspect(aspect) {
     gameText.textContent = aspect.takeText;
     playerCharacter.inventory[aspect] = aspect;
     delete currentRoom.objects.aspect;
+    if (aspect.takeFunction) {
+        aspect.takeFunction();
+    }
 }
 
 function openAspect(aspect) {
     gameText.textContent = aspect.openText;
+    if (aspect.openFunction) {
+        aspect.openFunction();
+    }
+}
+
+function pushAspect(aspect) {
+    gameText.textContent = aspect.pushText;
+    if (aspect.pushFunction) {
+        aspect.pushFuntion();
+    }
+}
+
+function pullAspect(aspect) {
+    gameText.textContent = aspect.pullText;
+    if (aspect.pullFunction) {
+        aspect.pullFunction();
+    }
+}
+
+function talkToAspect(aspect) {
+    if (aspect.dialogue.length > 1) {
+        gameText.textContent = aspect.dialogue[0];
+        aspect.removedDialogue.push(aspect.dialogue[0]);
+        aspect.dialogue.shift();
+    } else {
+        gameText.textContent = aspect.dialogue[0]; 
+    }
 }
