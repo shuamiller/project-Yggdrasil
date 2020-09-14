@@ -280,7 +280,7 @@ function examineAspect(aspect) {
 }
 
 function takeAspect(aspect) {
-    gameText.textContent = `You picked up the ${aspect.name}`;
+    gameText.textContent = aspect.takeText;
     playerCharacter.inventory[aspect] = aspect;
     delete currentRoom.objects.aspect;
 }
