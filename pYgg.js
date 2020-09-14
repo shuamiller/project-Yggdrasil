@@ -3,7 +3,9 @@ const beginDiv = document.querySelector("#begin-div");
 const textDiv = document.querySelector("#text-div");
 const playerInterface = document.querySelector("#player-interface");
 const inputDiv = document.querySelector("#input-div");
+const playerInput = document.querySelector("#player-input");
 const gameInfo = document.querySelector('#game-info');
+const form = document.querySelector('form')
 let currentRoom;
 let currentWorld;
 
@@ -17,7 +19,8 @@ let doorway = {
     openText: "It doesn't appear to open in any way.",
     pushText: "You push against the flat surface, but it doesn't give.",
     pullText: "There isn't any way to pull it.",
-    dialogue: ["It says nothing.", "It still says nothing..."]
+    dialogue: ["It says nothing.", "It still says nothing..."],
+    directionalAccess: false
 };
 
 let darkGlass = {
@@ -112,6 +115,119 @@ beginBtn.addEventListener('click', () => {
     createLocationHeader();
 });
 
+function camelCase(str) { 
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) 
+    { 
+        return index == 0 ? word.toLowerCase() : word.toUpperCase(); 
+    }).replace(/\s+/g, ''); 
+}
+
+function getInput() {
+    let input = document.getElementById(player-input).value;
+    input.toLowerCase();
+    return input;
+}
+
+function makeArray() {
+    getInput();
+    let inputArray = input.split(' ');
+    return inputArray;
+}
+
+function getGeneralAspect(array) {
+    let str = ""
+    for (let i = 1; i < array.length; i++) {
+        str = str + " " + array[i];
+    }
+    let camelStr = camelCase(str);
+    return camelStr;
+}
+
+function getSpeakerAspect(array) {
+    let str = ""
+    for (let i = 2; i < array.length; i++) {
+        str = str + " " + array[i];
+    }
+    let camelStr = camelCase(str);
+    return camelStr;
+}
+
+function determineAction() {
+    makeArray();
+    let aspect = ""
+    if (inputArray[0] === "walk") {
+        aspect = inputArray[1];
+        walkDirection(aspect);
+    }
+    if (inputArray[0] === "examine") {
+        aspect = getGeneralAspect(inputArray);
+        examineAspect(aspect);
+    }
+    if (inputArray[0] === "take") {
+        aspect = getGeneralAspect(inputArray);
+        takeAspect(aspect);
+    }
+    if (inputArray[0] === "open") {
+        aspect = getGeneralAspect(inputArray);
+        openAspect(aspect);
+    }
+    if (inputArray[0] === "push") {
+        aspect = getGeneralAspect(inputArray);
+        pushAspect(aspect);
+    }
+    if (inputArray[0] === "pull") {
+        aspect = getGeneralAspect(inputAray);
+        pullAspect(aspect);
+    }
+    if (inputArray[0] === "talk" && inputArray[1] === "to") {
+        aspect = getSpeakerAspect(inputArray);
+        talkToAspect(aspect);
+    }
+    if (inputArray[0] === "give") {
+        
+        giveAspect(aspect, receiver);
+    }
+    if (inputArray[0] === "use") {
+        
+        useAspect(aspect1, aspect2);
+    }
+    if (inputArray[0] === "?") {
+        if (inputArray.length > 1) {
+            aspect = getGeneralAspect(inputArray);
+            getHelpWith(aspect);
+        } else {
+            getHelp();
+        }
+    }
+}
+
+form.addEventListener('submit', determineAction);
+
+function getName() {
+    if (gameText.textContent === darkGlass.description) {
+
+    }
+}
+
+function showRoomDescription(room) {
+    gameText.textContent = room.description;
+}
+
+function enterRoom(aspect) {
+    currentRoom = aspect;
+    setRoomLocation(currentRoom);
+    showRoomDescription(currentRoom);
+}
+
+function walkDirection(aspect) {
+    if (aspect === 'none' || directionalAccess === 'false') {
+        gameInfo.textContent = "There's nothing in that direction.";
+    } else {
+        enterRoom(aspect);
+    }
+}
+
 function examineAspect(aspect) {
     gameText.textContent = aspect.description;
 }
+
