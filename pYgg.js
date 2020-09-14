@@ -137,18 +137,42 @@ function makeArray() {
 function getGeneralAspect(array) {
     let str = ""
     for (let i = 1; i < array.length; i++) {
-        str = str + " " + array[i];
+        str = str + array[i] + " ";
     }
-    let camelStr = camelCase(str);
+    let trimmedStr = str.trim();
+    let camelStr = camelCase(trimmedStr);
     return camelStr;
 }
 
 function getSpeakerAspect(array) {
     let str = ""
     for (let i = 2; i < array.length; i++) {
-        str = str + " " + array[i];
+        str = str + array[i] + " ";
     }
-    let camelStr = camelCase(str);
+    let trimmedStr = str.trim();
+    let camelStr = camelCase(trimmedStr);
+    return camelStr;
+}
+
+function getGivenAspect(array) {
+    let toIndex = array.indexOf('to')
+    let str = ""
+    for (let i = 1; i < toIndex; i++) {
+        str = str + array[i] + " ";
+    }
+    let trimmedStr = str.trim();
+    let camelStr = camelCase(trimmedStr);
+    return camelStr;
+}
+
+function getReceiver(array) {
+    let toIndex = array.indexOf('to')
+    let str = ""
+    for (let i = toIndex + 1; i < array.length; i++) {
+        str = str + array[i] + " ";
+    }
+    let trimmedStr = str.trim();
+    let camelStr = camelCase(trimmedStr);
     return camelStr;
 }
 
@@ -184,7 +208,8 @@ function determineAction() {
         talkToAspect(aspect);
     }
     if (inputArray[0] === "give") {
-        
+        getGivenAspect(inputArray);
+        getReceiver(inputArray);
         giveAspect(aspect, receiver);
     }
     if (inputArray[0] === "use") {
