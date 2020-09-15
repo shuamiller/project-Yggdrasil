@@ -248,14 +248,13 @@ function determineAction() {
             getHelp();
         }
     }
+    form.reset();
 }
 
 form.addEventListener('submit', determineAction);
 
 function getName() {
-    if (gameText.textContent === darkGlass.description) {
-
-    }
+    
 }
 
 function showRoomDescription(room) {
