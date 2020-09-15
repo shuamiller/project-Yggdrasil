@@ -34,7 +34,7 @@ let heraldOfYggdrasil = {
 
 let entryPoint = {
     name: "Entry Point",
-    description: "You find yourself in a room of smooth stone the color of sand. You don't remember how you came to be here. You don't remember who you are.\n\nThis room seems to be illuminated without a source. Ahead of you, there is a recessed wall that could be a doorway, but there is no opening. To the left of the recess, a circular portal of dark glass is set in the wall.",
+    description: '<p class="game-text">You find yourself in a room of smooth stone the color of sand. You don\'t remember how you came to be here. You don\'t remember who you are.</p><p class="game-text">This room seems to be illuminated without a source. Ahead of you, there is a recessed wall that could be a <span class="object-text">doorway</span>, but there is no opening. To the left of the recess, a circular portal of <span class="object-text">dark glass</span> is set in the wall.</p>',
     objects: [
         doorway,
         darkGlass
@@ -71,10 +71,7 @@ function removeChildren(parent) {
 }
 
 function appendGameText() {
-    const gameText = document.createElement('p');
-    gameText.setAttribute('class', 'game-text');
-    gameText.textContent = entryPoint.description;
-    textDiv.appendChild(gameText);
+    textDiv.innerHTML = entryPoint.description;
 }
 
 function setRoomLocation(room) {
@@ -248,7 +245,6 @@ function determineAction() {
             getHelp();
         }
     }
-    form.reset();
 }
 
 form.addEventListener('submit', determineAction);
