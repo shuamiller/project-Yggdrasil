@@ -328,3 +328,17 @@ function talkToAspect(aspect) {
         aspect.talkFunction();
     }
 }
+
+function giveFunction(aspect, receiver) {
+    if (!playerCharacter.inventory.includes(aspect)) {
+        gameText.textContent = "You don't have that object with you."
+    } else {
+        if (!receiver.receivable.includes(aspect)) {
+            gameText.textContent = receiver.wontTakeText;
+        } else if (receiver.receivable.includes(aspect)) {
+            receiver.inventory.push(aspect);
+            let aspectIndex = playerCharacter.inventory.indexOf(aspect);
+            playerCharacter.inventory.splice(aspectIndex, 1);
+        }
+    }
+}
