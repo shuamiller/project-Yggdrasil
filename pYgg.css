@@ -280,8 +280,9 @@ h1 {
     background-color: goldenrod;
     color: whitesmoke;
     font-family: Montserrat;
+    font-size: 1em;
     width: 5em;
-    height: 3.5em;
+    height: 3em;
     border-radius: .5em;
     border-style: none;
 }
