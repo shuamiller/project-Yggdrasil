@@ -25,7 +25,7 @@ let doorway = {
 };
 
 let darkGlass = {
-    description: "A circular portal of dark glass set into the wall. It is about the size of your head. As you look at it, the glass-like surface begins to ripple suddenly. You hear a voice come from the portal. As the voice speaks, the ripple grows. 'Welcome, Pilgrim. I am the Herald of Yggdrasil. We haven't had a new arrival in some time. What is your name?'"
+    description: '<p class="game-text">A circular portal of dark glass set into the wall. It is about the size of your head. As you look at it, the glass-like surface begins to ripple suddenly. You hear a voice come from the portal. As the voice speaks, the ripple grows. \'Welcome, Pilgrim. I am the Herald of Yggdrasil. We haven\'t had a new arrival in some time. What is your name?\'</p>'
 };
 
 let heraldOfYggdrasil = {
@@ -121,13 +121,13 @@ function camelCase(str) {
 }
 
 function getInput() {
-    let input = document.getElementById(player-input).value;
-    input.toLowerCase();
+    let input = document.getElementById("player-input").value;
+    input = input.toLowerCase();
     return input;
 }
 
 function makeArray() {
-    getInput();
+    input = getInput();
     let inputArray = input.split(' ');
     return inputArray;
 }
@@ -196,58 +196,13 @@ function getAspect2(array) {
     return camelStr;
 }
 
-function determineAction() {
-    makeArray();
-    let aspect = ""
-    if (inputArray[0] === "walk") {
-        aspect = inputArray[1];
-        walkDirection(aspect);
-    }
-    if (inputArray[0] === "examine") {
-        aspect = getGeneralAspect(inputArray);
-        examineAspect(aspect);
-    }
-    if (inputArray[0] === "take") {
-        aspect = getGeneralAspect(inputArray);
-        takeAspect(aspect);
-    }
-    if (inputArray[0] === "open") {
-        aspect = getGeneralAspect(inputArray);
-        openAspect(aspect);
-    }
-    if (inputArray[0] === "push") {
-        aspect = getGeneralAspect(inputArray);
-        pushAspect(aspect);
-    }
-    if (inputArray[0] === "pull") {
-        aspect = getGeneralAspect(inputAray);
-        pullAspect(aspect);
-    }
-    if (inputArray[0] === "talk" && inputArray[1] === "to") {
-        aspect = getSpeakerAspect(inputArray);
-        talkToAspect(aspect);
-    }
-    if (inputArray[0] === "give") {
-        let aspect = getGivenAspect(inputArray);
-        let receiver = getReceiver(inputArray);
-        giveAspect(aspect, receiver);
-    }
-    if (inputArray[0] === "use") {
-        let aspect1 = getAspect1(inputArray);
-        let aspect2 = getAspect2(inputArray);
-        useAspect(aspect1, aspect2);
-    }
-    if (inputArray[0] === "?") {
-        if (inputArray.length > 1) {
-            aspect = getGeneralAspect(inputArray);
-            getHelpWith(aspect);
-        } else {
-            getHelp();
-        }
-    }
-}
 
-form.addEventListener('submit', determineAction);
+
+playerInterface.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        determineAction();
+    }
+});
 
 function getName() {
     
@@ -275,14 +230,15 @@ function walkDirection(aspect) {
 }
 
 function examineAspect(aspect) {
-    gameText.textContent = aspect.description;
+    console.log(aspect);
+    textDiv.innerHTML = aspect.description;
     if (aspect.examinationFunction) {
         aspect.examinationFunction();
     }
 }
 
 function takeAspect(aspect) {
-    gameText.textContent = aspect.takeText;
+    textDiv.innerHTML = aspect.takeText;
     playerCharacter.inventory[aspect] = aspect;
     delete currentRoom.objects.aspect;
     if (aspect.takeFunction) {
@@ -291,21 +247,21 @@ function takeAspect(aspect) {
 }
 
 function openAspect(aspect) {
-    gameText.textContent = aspect.openText;
+    textDiv.innerHTML = aspect.openText;
     if (aspect.openFunction) {
         aspect.openFunction();
     }
 }
 
 function pushAspect(aspect) {
-    gameText.textContent = aspect.pushText;
+    textDiv.innerHTML = aspect.pushText;
     if (aspect.pushFunction) {
         aspect.pushFuntion();
     }
 }
 
 function pullAspect(aspect) {
-    gameText.textContent = aspect.pullText;
+    textDiv.innerHTML = aspect.pullText;
     if (aspect.pullFunction) {
         aspect.pullFunction();
     }
@@ -313,11 +269,11 @@ function pullAspect(aspect) {
 
 function talkToAspect(aspect) {
     if (aspect.dialogue.length > 1) {
-        gameText.textContent = aspect.dialogue[0];
+        textDiv.innerHTML = aspect.dialogue[0];
         aspect.removedDialogue.push(aspect.dialogue[0]);
         aspect.dialogue.shift();
     } else {
-        gameText.textContent = aspect.dialogue[0]; 
+        textDiv.innerHTML = aspect.dialogue[0]; 
     }
     if (aspect.talkFunction) {
         aspect.talkFunction();
@@ -326,14 +282,59 @@ function talkToAspect(aspect) {
 
 function giveFunction(aspect, receiver) {
     if (!playerCharacter.inventory.includes(aspect)) {
-        gameText.textContent = "You don't have that object with you."
+        textDiv.innerHTML = "You don't have that object with you."
     } else {
         if (!receiver.receivable.includes(aspect)) {
-            gameText.textContent = receiver.wontTakeText;
+            textDiv.innerHTML = receiver.wontTakeText;
         } else if (receiver.receivable.includes(aspect)) {
             receiver.inventory.push(aspect);
             let aspectIndex = playerCharacter.inventory.indexOf(aspect);
             playerCharacter.inventory.splice(aspectIndex, 1);
+        }
+    }
+}
+
+function determineAction() {
+    inputArray = makeArray();
+    console.log(inputArray);
+    let aspect = ""
+    if (inputArray[0] === "walk") {
+        aspect = inputArray[1];
+        console.log(aspect);
+        walkDirection(aspect);
+    } else if (inputArray[0] === "examine") {
+        aspect = getGeneralAspect(inputArray);
+        console.log(aspect)
+        examineAspect(aspect);
+    } else if (inputArray[0] === "take") {
+        aspect = getGeneralAspect(inputArray);
+        takeAspect(aspect);
+    } else if (inputArray[0] === "open") {
+        aspect = getGeneralAspect(inputArray);
+        openAspect(aspect);
+    } else if (inputArray[0] === "push") {
+        aspect = getGeneralAspect(inputArray);
+        pushAspect(aspect);
+    } else if (inputArray[0] === "pull") {
+        aspect = getGeneralAspect(inputAray);
+        pullAspect(aspect);
+    } else if (inputArray[0] === "talk" && inputArray[1] === "to") {
+        aspect = getSpeakerAspect(inputArray);
+        talkToAspect(aspect);
+    } else if (inputArray[0] === "give") {
+        let aspect = getGivenAspect(inputArray);
+        let receiver = getReceiver(inputArray);
+        giveAspect(aspect, receiver);
+    } else if (inputArray[0] === "use") {
+        let aspect1 = getAspect1(inputArray);
+        let aspect2 = getAspect2(inputArray);
+        useAspect(aspect1, aspect2);
+    } else if (inputArray[0] === "?") {
+        if (inputArray.length > 1) {
+            aspect = getGeneralAspect(inputArray);
+            getHelpWith(aspect);
+        } else {
+            getHelp();
         }
     }
 }
