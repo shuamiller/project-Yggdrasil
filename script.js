@@ -8,61 +8,77 @@ const gameInfo = document.querySelector('#game-info');
 const form = document.querySelector('form')
 let currentRoom;
 let currentWorld;
+let currentRoomName;
+let currentWorldName;
 
 let playerCharacter = {
-    name: "",
+    name: "Shua Miller",
     inventory: [],
 }
 
-let doorway = {
-    description: "A smooth surface, the same color and texture as the rest of the room but recessed into the north wall.",
-    openText: "It doesn't appear to open in any way.",
-    pushText: "You push against the flat surface, but it doesn't give.",
-    pullText: "There isn't any way to pull it.",
-    dialogue: ["It says nothing.", "It still says nothing..."],
-    removedDialogue: [],
-    directionalAccess: false
-};
-
-let darkGlass = {
-    description: '<p class="game-text">A circular portal of dark glass set into the wall. It is about the size of your head. As you look at it, the glass-like surface begins to ripple suddenly. You hear a voice come from the portal. As the voice speaks, the ripple grows. \'Welcome, Pilgrim. I am the Herald of Yggdrasil. We haven\'t had a new arrival in some time. What is your name?\'</p>'
-};
-
-let heraldOfYggdrasil = {
-
-};
-
-let entryPoint = {
-    name: "Entry Point",
-    description: '<p class="game-text">You find yourself in a room of smooth stone the color of sand. You don\'t remember how you came to be here. You don\'t remember who you are.</p><p class="game-text">This room seems to be illuminated without a source. Ahead of you, there is a recessed wall that could be a <span class="object-text">doorway</span>, but there is no opening. To the left of the recess, a circular portal of <span class="object-text">dark glass</span> is set in the wall.</p>',
-    objects: [
-        doorway,
-        darkGlass
-    ],
-    characters: [
-        heraldOfYggdrasil
-    ]
-};
-
 let worlds0 = {
     name: "Worlds[0]",
-    rooms: [
-        entryPoint
-    ] 
+    rooms: {
+        visionalHall: {
+            name: "Visional Hall",
+            description: `<p class="game-text">New Room</p>`,
+            objects: {
+
+            },
+            characters: {
+
+            },
+            directions: {
+
+            }
+        },
+        entryPoint: {
+            name: "Entry Point",
+            description: '<p class="game-text">You find yourself in a room of smooth stone the color of sand. You don\'t remember how you came to be here. You don\'t remember who you are.</p><p class="game-text">This room seems to be illuminated without a source. Ahead of you, there is a recessed wall that could be a <span class="object-text">doorway</span>, but there is no opening. To the left of the recess, a circular portal of <span class="object-text">dark glass</span> is set in the wall.</p>',
+            objects: {
+                doorway: {
+                    description: `<p class="game-text">A smooth surface, the same color and texture as the rest of the room but recessed into the <span class="direction-text">North</span> wall.</p>`,
+                    openText: '<p class="game-text">It doesn\'t appear to open in any way.</p>',
+                    pushText: '<p class="game-text">You push against the flat surface, but it doesn\'t give.</p>',
+                    pullText: '<p class="game-text">There isn\'t any way to pull it.</p>',
+                    dialogue: ['<p class="game-text">It says nothing.</p>', '<p class="game-text">It still says nothing...</p>'],
+                    removedDialogue: [],
+                    isTakeable: false,
+                },
+                darkGlass: {
+                    name: "dark glass",
+                    description: `<p class="game-text">A circular portal of dark glass set into the wall. It is about the size of your head. As you look at it, the glass-like surface begins to ripple suddenly. You hear a voice come from the portal. As the voice speaks, the ripple grows.</p><p class="game-text">Oh, another Convert. It's been some time. I didn't know there would be more of you, but I know not what happens beyond the deep. What is your name, Convert?"</p>`,
+                    isTakeable: false,
+                    examinationFunction: function() {
+                        console.log(playerCharacter.name)
+                        playerInput.removeEventListener('keypress', checkInput);
+                        console.log(playerCharacter.name);
+                        playerInput.addEventListener('keypress', getName);
+                        console.log(playerCharacter.name);
+                    },
+                },
+                key: {
+                    name: "key",
+                    description: '<p class="game-text">A small, brass key.</p>',
+                    isTakeable: true,
+                }
+            },
+            characters: {
+                heraldOfYggdrasil: {
+
+                }
+            },
+            directions: {
+                north: {
+                    directionalAccess: false,
+                    room: "visionalHall",
+                }
+            }
+        },
+        
+    } 
 }
 
-
-function replaceButton() {
-    playerInterface.removeChild(beginDiv);
-    const labelDiv = document.createElement('div');
-    labelDiv.setAttribute('id', 'label-div');
-    const question = document.createElement('label');
-    question.setAttribute('id', 'question');
-    question.setAttribute('for', 'player-input');
-    question.textContent = "What Will You Do?"
-    labelDiv.appendChild(question);
-    playerInterface.insertBefore(labelDiv, inputDiv);
-}
 
 function removeChildren(parent) {
     while(parent.firstChild) {
@@ -71,15 +87,17 @@ function removeChildren(parent) {
 }
 
 function appendGameText() {
-    textDiv.innerHTML = entryPoint.description;
+    textDiv.innerHTML = worlds0.rooms.entryPoint.description;
 }
 
 function setRoomLocation(room) {
-    currentRoom = room.name;
+    currentRoom = room;
+    currentRoomName = room.name;
 }
 
 function setWorldLocation(world) {
-    currentWorld = world.name;
+    currentWorld = world;
+    currentWorldName = world.name;
 }
 
 function createLocationHeader() {
@@ -100,15 +118,16 @@ function createLocationHeader() {
     roomLocation.appendChild(roomText);
     locationDiv.appendChild(roomLocation);
     gameInfo.insertBefore(locationDiv, textDiv);
-    worldText.textContent = currentWorld;
-    roomText.textContent = currentRoom;
+    worldText.textContent = currentWorldName;
+    roomText.textContent = currentRoomName;
 };
 
 beginBtn.addEventListener('click', () => {
-    replaceButton();
+    playerInterface.removeChild(beginDiv);
+    playerInput.setAttribute('placeholder', 'What Will You Do?');
     removeChildren(textDiv);
     appendGameText();
-    setRoomLocation(entryPoint);
+    setRoomLocation(worlds0.rooms.entryPoint);
     setWorldLocation(worlds0);
     createLocationHeader();
 });
@@ -121,7 +140,7 @@ function camelCase(str) {
 }
 
 function getInput() {
-    let input = document.getElementById("player-input").value;
+    let input = playerInput.value;
     input = input.toLowerCase();
     return input;
 }
@@ -196,31 +215,53 @@ function getAspect2(array) {
     return camelStr;
 }
 
-
-
-playerInterface.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
+function checkInput(event) {
+    if (event.key === 'Enter') {
+        console.log("active");
         determineAction();
+        playerInput.value = "";
     }
-});
+}
 
-function getName() {
-    
+function getName(event) {
+    console.log(playerCharacter.name)
+    console.log(playerInput.value);
+    if (event.key === 'Enter') {
+        console.log(playerCharacter.name);
+        console.log(playerInput.value);
+        playerCharacter.name = playerInput.value;
+        console.log(playerCharacter.name);
+        textDiv.innerHTML = `<p class="game-text">"It's good to meet you, <span class="character-text">${playerCharacter.name}</span>! I'm Greeter,Dif. Of course you'll have heard of me from before your Conver- Oh! You appear to be missing your PED. How unusual... Something's wrong. I'm sorry about the inconvenience. Normally, I'd send you to the Council, but as they've dispersed, I'll have to take care of this somehow. Meet me in the Hall,Annals across the city; We can try to figure this out there. I'm sorry the circumstances are so strange, but nonetheless... Welcome to <span class="yggdrasil">Yggdrasil</span>."</p><p class="game-text">The doorway before you to the <span class="direction-text">North</span> splits down the middle, and the two halves recede into the walls creating an opening.</p>`;
+        currentRoom.directions.north.directionalAccess = true;
+        removeTempEventListener();
+        console.log(playerCharacter.name);
+        playerInput.value = "";
+    }
+}
+
+playerInput.addEventListener('keypress', checkInput);
+
+function removeTempEventListener() {
+    console.log(playerCharacter.name);
+    playerInput.removeEventListener('keypress', getName);
+    console.log(playerCharacter.name);
+    playerInput.addEventListener('keypress', checkInput);
+    console.log(playerCharacter.name);
 }
 
 function showRoomDescription(room) {
-    gameText.textContent = room.description;
+    textDiv.innerHTML = room.description;
 }
 
 function enterRoom(aspect) {
-    currentRoom = aspect;
+    currentRoom = currentRoom.directions[aspect].room;
     setRoomLocation(currentRoom);
     showRoomDescription(currentRoom);
 }
 
 function walkDirection(aspect) {
-    if (aspect === 'none' || directionalAccess === 'false') {
-        gameInfo.textContent = "There's nothing in that direction.";
+    if (aspect === 'none' || currentRoom.directions[aspect].directionalAccess === false) {
+        textDiv.innerHTML = `<p class="game-text">There\'s nothing in that direction.</p>`;
     } else {
         enterRoom(aspect);
     }
@@ -230,63 +271,127 @@ function walkDirection(aspect) {
 }
 
 function examineAspect(aspect) {
-    console.log(aspect);
-    textDiv.innerHTML = aspect.description;
-    if (aspect.examinationFunction) {
-        aspect.examinationFunction();
+    if (aspect in currentRoom.objects) {
+        textDiv.innerHTML = currentRoom.objects[aspect].description;
+        if (currentRoom.objects[aspect].examinationFunction) {
+            currentRoom.objects[aspect].examinationFunction();
+        }
+    } else if (aspect in currentRoom.characters) {
+        textDiv.innerHTML = currentRoom.characters[aspect].description;
+        if (currentRoom.characters[aspect].examinationFunction) {
+            currentRoom.characters[aspect].examinationFunction();
+        }
     }
 }
 
 function takeAspect(aspect) {
-    textDiv.innerHTML = aspect.takeText;
-    playerCharacter.inventory[aspect] = aspect;
-    delete currentRoom.objects.aspect;
-    if (aspect.takeFunction) {
-        aspect.takeFunction();
+    if (aspect in currentRoom.objects) {
+        if (currentRoom.objects[aspect].isTakeable) {
+            if (currentRoom.objects[aspect].takeText) {
+                textDiv.innerHTML = currentRoom.objects[aspect].takeText;
+            } else {
+                textDiv.innerHTML = `<p class=game-text>You pick up the ${currentRoom.objects[aspect].name}`
+            }
+            playerCharacter.inventory[aspect] = currentRoom.objects[aspect];
+            delete currentRoom.objects[aspect];
+            if (aspect.takeFunction) {
+                aspect.takeFunction();
+            }
+        } else {
+            textDiv.innerHTML = '<p class="game-text">You can\'t take that with you.</p>'
+        }
+    } else if (aspect in currentRoom.characters) {
+        if (currentRoom.objects[aspect].isTakeable) {
+            if (currentRoom.objects[aspect].takeText) {
+                textDiv.innerHTML = currentRoom.objects[aspect].takeText;
+            } else {
+                textDiv.innerHTML = `<p class=game-text>You pick up the ${currentRoom.objects[aspect].name}`
+            }
+            playerCharacter.inventory[aspect] = currentRoom.objects[aspect];
+            delete currentRoom.objects[aspect];
+            if (aspect.takeFunction) {
+                aspect.takeFunction();
+            }
+        } else {
+            textDiv.innerHTML = '<p class="game-text">You can\'t take that with you.</p>'
+        }
     }
 }
 
 function openAspect(aspect) {
-    textDiv.innerHTML = aspect.openText;
-    if (aspect.openFunction) {
-        aspect.openFunction();
+    if (aspect in currentRoom.objects) {
+        textDiv.innerHTML = currentRoom.objects[aspect].openText;
+        if (aspect.openFunction) {
+            aspect.openFunction();
+        }
+    } else if (aspect in currentRoom.characters) {
+        textDiv.innerHTML = currentRoom.characters[aspect].openText;
+        if (currentRoom.characters[aspect].openFunction) {
+            currentRoom.characters[aspect].openFunction();
+        }
     }
 }
 
 function pushAspect(aspect) {
-    textDiv.innerHTML = aspect.pushText;
-    if (aspect.pushFunction) {
-        aspect.pushFuntion();
+    if (aspect in currentRoom.objects) {
+        textDiv.innerHTML = currentRoom.objects[aspect].pushText;
+        if (aspect.pushFunction) {
+            aspect.pushFuntion();
+        }
+    } else if (aspect in currentRoom.characters) {
+        if (currentRoom.characters[aspect].pushFunction) {
+            currentRoom.characters[aspect].pushFunction();
+        }
     }
 }
 
 function pullAspect(aspect) {
-    textDiv.innerHTML = aspect.pullText;
-    if (aspect.pullFunction) {
-        aspect.pullFunction();
+    if (aspect in currentRoom.objects) {
+        textDiv.innerHTML = currentRoom.objects[aspect].pullText;
+        if (aspect.pullFunction) {
+            aspect.pullFunction();
+        }
+    } else if (aspect in currentRoom.characters) {
+        textDiv.innerHTML = currentRoom.characters[aspect].pullText;
+        if (currentRoom.characters[aspect].pullFunction) {
+            currentRoom.characters[aspect].pullFunction();
+        }
     }
 }
 
 function talkToAspect(aspect) {
-    if (aspect.dialogue.length > 1) {
-        textDiv.innerHTML = aspect.dialogue[0];
-        aspect.removedDialogue.push(aspect.dialogue[0]);
-        aspect.dialogue.shift();
-    } else {
-        textDiv.innerHTML = aspect.dialogue[0]; 
-    }
-    if (aspect.talkFunction) {
-        aspect.talkFunction();
+    if (aspect in currentRoom.objects) {
+        if (currentRoom.objects[aspect].dialogue.length > 1) {
+            textDiv.innerHTML = currentRoom.objects[aspect].dialogue[0];
+            currentRoom.objects[aspect].removedDialogue.push(currentRoom.objects[aspect].dialogue[0]);
+            currentRoom.objects[aspect].dialogue.shift();
+        } else {
+            textDiv.innerHTML = currentRoom.objects[aspect].dialogue[0]; 
+        }
+        if (currentRoom.objects[aspect].talkFunction) {
+            currentRoom.objects[aspect].talkFunction();
+        }
+    } else if (aspect in currentRoom.characters) {
+        if (currentRoom.characters[aspect].dialogue.length > 1) {
+            textDiv.innerHTML = currentRoom.characters[aspect].dialogue[0];
+            currentRoom.characters[aspect].removedDialogue.push(currentRoom.characters[aspect].dialogue[0]);
+            currentRoom.characters[aspect].dialogue.shift();
+        } else {
+            textDiv.innerHTML = currentRoom.characters[aspect].dialogue[0]; 
+        }
+        if (currentRoom.characters[aspect].talkFunction) {
+            currentRoom.characters[aspect].talkFunction();
+        }
     }
 }
 
 function giveFunction(aspect, receiver) {
-    if (!playerCharacter.inventory.includes(aspect)) {
-        textDiv.innerHTML = "You don't have that object with you."
+    if (!playerCharacter.inventory.hasOwnProperty(aspect)) {
+        textDiv.innerHTML = `<p class="game-text">You don't have ${aspect} with you.`
     } else {
-        if (!receiver.receivable.includes(aspect)) {
+        if (!receiver.receivable.hasOwnProperty(aspect)) {
             textDiv.innerHTML = receiver.wontTakeText;
-        } else if (receiver.receivable.includes(aspect)) {
+        } else if (receiver.receivable.hasOwnProperty(aspect)) {
             receiver.inventory.push(aspect);
             let aspectIndex = playerCharacter.inventory.indexOf(aspect);
             playerCharacter.inventory.splice(aspectIndex, 1);
@@ -294,11 +399,45 @@ function giveFunction(aspect, receiver) {
     }
 }
 
+function useAspect(aspect1, aspect2) {
+    if (!playerCharacter.inventory.hasOwnProperty(aspect1)) {
+        textDiv.innerHTML = `<p class="game-text">You don't have ${aspect1} with you.</p>`;
+    } else if (
+        !playerCharacter.inventory.hasOwnProperty(aspect2) || 
+        !currentRoom.objects.hasOwnProperty(aspect2) ||
+        !currentRoom.characters.hasOwnProperty(aspect2)
+    ){
+        textDiv.innerHTML = `You don't have access to ${aspect2}`;
+    } else if (!currentRoom.objects[aspect2].isUseableWith.hasOwnProperty(aspect1) || !currentRoom.characters[aspect2].isUseableWith.hasOwnProperty(aspect1)) {
+        if (currentRoom.objects[aspect2].hasOwnProperty(refuseToTakeText)) {
+            textDiv.innerHTML = currentRoom.objects[aspect2].refuseToTakeText;
+        } else if (currentRoom.characters[aspect2].hasOwnProperty(refuseToTakeText)) {
+            textDiv.innerHTML = currentRoom.characters[aspect2].refuseToTakeText;
+        } else {
+            textDiv.innerHTML = `You can't use ${aspect1} with ${aspect2}`;
+        }
+    } else {
+        if (currentRoom.objects.hasOwnProperty(aspect2)) {
+            textDiv.innerHTML = currentRoom.objects[aspect2].usables[aspect1].useText
+            
+        } else if (currentRoom.characters.hasOwnProperty(aspect1)) {
+            textDiv.innerHTML = currentRoom.characters[aspect2].usables[aspect1].useText
+        }
+    }
+}
+
+function checkInventory() {
+    let inventoryList = [];
+    for (const item in playerCharacter.inventory) {
+        inventoryList.push(item.name);
+    }
+    textDiv.innerHTML = inventoryList;
+}
+
 function determineAction() {
     inputArray = makeArray();
-    console.log(inputArray);
     let aspect = ""
-    if (inputArray[0] === "walk") {
+    if (inputArray[0] === "walk" || inputArray[0] === "go") {
         aspect = inputArray[1];
         console.log(aspect);
         walkDirection(aspect);
@@ -316,7 +455,7 @@ function determineAction() {
         aspect = getGeneralAspect(inputArray);
         pushAspect(aspect);
     } else if (inputArray[0] === "pull") {
-        aspect = getGeneralAspect(inputAray);
+        aspect = getGeneralAspect(inputArray);
         pullAspect(aspect);
     } else if (inputArray[0] === "talk" && inputArray[1] === "to") {
         aspect = getSpeakerAspect(inputArray);
@@ -336,5 +475,7 @@ function determineAction() {
         } else {
             getHelp();
         }
+    } else if (inputArray[0] === "check" && inputArray[1] === "inventory") {
+        checkInventory();
     }
 }
