@@ -50,11 +50,8 @@ let worlds0 = {
                     description: `<p class="game-text">A circular portal of dark glass set into the wall. It is about the size of your head. As you look at it, the glass-like surface begins to ripple suddenly. You hear a voice come from the portal. As the voice speaks, the ripple grows.</p><p class="game-text">Oh, another Convert. It's been some time. I didn't know there would be more of you, but I know not what happens beyond the deep. What is your name, Convert?"</p>`,
                     isTakeable: false,
                     examinationFunction: function() {
-                        console.log(playerCharacter.name)
                         playerInput.removeEventListener('keypress', checkInput);
-                        console.log(playerCharacter.name);
                         playerInput.addEventListener('keypress', getName);
-                        console.log(playerCharacter.name);
                     },
                 },
                 key: {
@@ -217,24 +214,17 @@ function getAspect2(array) {
 
 function checkInput(event) {
     if (event.key === 'Enter') {
-        console.log("active");
         determineAction();
         playerInput.value = "";
     }
 }
 
 function getName(event) {
-    console.log(playerCharacter.name)
-    console.log(playerInput.value);
     if (event.key === 'Enter') {
-        console.log(playerCharacter.name);
-        console.log(playerInput.value);
         playerCharacter.name = playerInput.value;
-        console.log(playerCharacter.name);
         textDiv.innerHTML = `<p class="game-text">"It's good to meet you, <span class="character-text">${playerCharacter.name}</span>! I'm Greeter,Dif. Of course you'll have heard of me from before your Conver- Oh! You appear to be missing your PED. How unusual... Something's wrong. I'm sorry about the inconvenience. Normally, I'd send you to the Council, but as they've dispersed, I'll have to take care of this somehow. Meet me in the Hall,Annals across the city; We can try to figure this out there. I'm sorry the circumstances are so strange, but nonetheless... Welcome to <span class="yggdrasil">Yggdrasil</span>."</p><p class="game-text">The doorway before you to the <span class="direction-text">North</span> splits down the middle, and the two halves recede into the walls creating an opening.</p>`;
         currentRoom.directions.north.directionalAccess = true;
         removeTempEventListener();
-        console.log(playerCharacter.name);
         playerInput.value = "";
     }
 }
@@ -242,11 +232,8 @@ function getName(event) {
 playerInput.addEventListener('keypress', checkInput);
 
 function removeTempEventListener() {
-    console.log(playerCharacter.name);
     playerInput.removeEventListener('keypress', getName);
-    console.log(playerCharacter.name);
     playerInput.addEventListener('keypress', checkInput);
-    console.log(playerCharacter.name);
 }
 
 function showRoomDescription(room) {
@@ -254,7 +241,8 @@ function showRoomDescription(room) {
 }
 
 function enterRoom(aspect) {
-    currentRoom = currentRoom.directions[aspect].room;
+    let newAspect = currentRoom.directions[aspect].room;
+    currentRoom = worlds0.rooms[newAspect];
     setRoomLocation(currentRoom);
     showRoomDescription(currentRoom);
 }
@@ -443,7 +431,6 @@ function determineAction() {
         walkDirection(aspect);
     } else if (inputArray[0] === "examine") {
         aspect = getGeneralAspect(inputArray);
-        console.log(aspect)
         examineAspect(aspect);
     } else if (inputArray[0] === "take") {
         aspect = getGeneralAspect(inputArray);
