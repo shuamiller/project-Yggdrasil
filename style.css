@@ -136,7 +136,7 @@ h1 {
     ;
 }
 .header-span {
-    color: gold;
+    color: rgb(255, 227, 68);
 }
 #subtitle {
     font-family: "Fira Code", monospace;
@@ -181,7 +181,7 @@ h1 {
 .location-header {
     font-family: "Fira Code", monospace;
     font-size: 1.2em;
-    color: darkolivegreen;
+    color: hsl(82, 40.8%, 60%);;
     margin: 0;
 }
 #text-div {
@@ -195,7 +195,11 @@ h1 {
 }
 #welcome-message {
     font-size: 1.5em;
-    color: wheat;
+    color: rgb(255, 227, 68);
+}
+.yggdrasil {
+    font-family: "Fira Code", monospace;
+    color: rgb(255, 227, 68);
 }
 .game-text {
     font-family: "Montserrat";
@@ -246,8 +250,8 @@ h1 {
     font-size: 1.75em;
     width: 5em;
     height: 1.6em;
-    background-color: wheat;
-    color: rgb(41, 41, 41);
+    background-color: hsl(43, 74.4%, 49%);
+    color: whitesmoke;
     border-style: none;
     border-radius: .25em;
 }
@@ -256,11 +260,6 @@ h1 {
     align-items: center;
     margin: 0 2em;
 }
-#question {
-    font-family: "Fira Code", monospace;
-    font-size: 1.75em;
-    color: wheat;
-}
 #input-div {
     display: flex;
     align-items: center;
@@ -268,6 +267,7 @@ h1 {
 #player-input {
     font-family: "Fira Code", monospace;
     padding: 0 1em;
+    margin: 0 0 0 1rem;
     color: whitesmoke;
     font-size: 1em;
     border-radius: .5em;
@@ -275,6 +275,12 @@ h1 {
     height: 3em;
     border-style: none;
     background-color: rgb(41, 41, 41);
+}
+#player-input:focus {
+    outline: none;
+}
+#submit-button:focus {
+    outline: none;
 }
 #submit-div {
     display: flex;
