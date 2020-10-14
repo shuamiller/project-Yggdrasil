@@ -6,13 +6,19 @@ const inputDiv = document.querySelector("#input-div");
 const playerInput = document.querySelector("#player-input");
 const gameInfo = document.querySelector('#game-info');
 const form = document.querySelector('form')
+const locationDiv = document.createElement('div');
+const worldLocation = document.createElement('div');
+const worldText = document.createElement('p');
+const roomLocation = document.createElement('div');
+const roomText = document.createElement('p');
+
 let currentRoom;
 let currentWorld;
 let currentRoomName;
 let currentWorldName;
 
 let playerCharacter = {
-    name: "Shua Miller",
+    name: "",
     inventory: [],
 }
 
@@ -90,33 +96,33 @@ function appendGameText() {
 function setRoomLocation(room) {
     currentRoom = room;
     currentRoomName = room.name;
+    roomText.textContent = currentRoomName;
 }
 
 function setWorldLocation(world) {
     currentWorld = world;
     currentWorldName = world.name;
+    worldText.textContent = currentWorldName;
 }
 
 function createLocationHeader() {
-    const locationDiv = document.createElement('div');
+    
     locationDiv.setAttribute('id', 'location-div');
-    const worldLocation = document.createElement('div');
+
     worldLocation.setAttribute('id', 'world-location');
-    const worldText = document.createElement('p');
+
     worldText.setAttribute('id', 'world-text');
     worldText.setAttribute('class', 'location-header');
     worldLocation.appendChild(worldText);
     locationDiv.appendChild(worldLocation);
-    const roomLocation = document.createElement('div');
+
     roomLocation.setAttribute('id', 'room-location');
-    const roomText = document.createElement('p');
+
     roomText.setAttribute('id', 'room-text');
     roomText.setAttribute('class', 'location-header');
     roomLocation.appendChild(roomText);
     locationDiv.appendChild(roomLocation);
     gameInfo.insertBefore(locationDiv, textDiv);
-    worldText.textContent = currentWorldName;
-    roomText.textContent = currentRoomName;
 };
 
 beginBtn.addEventListener('click', () => {
@@ -124,9 +130,10 @@ beginBtn.addEventListener('click', () => {
     playerInput.setAttribute('placeholder', 'What Will You Do?');
     removeChildren(textDiv);
     appendGameText();
+    createLocationHeader();
     setRoomLocation(worlds0.rooms.entryPoint);
     setWorldLocation(worlds0);
-    createLocationHeader();
+    
 });
 
 function camelCase(str) { 
