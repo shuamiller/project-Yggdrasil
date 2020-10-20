@@ -11,6 +11,7 @@ const worldLocation = document.createElement('div');
 const worldText = document.createElement('p');
 const roomLocation = document.createElement('div');
 const roomText = document.createElement('p');
+const descriptionDiv = document.createElement('div');
 
 let currentRoom;
 let currentWorld;
@@ -89,8 +90,8 @@ function removeChildren(parent) {
     }
 }
 
-function appendGameText() {
-    textDiv.innerHTML = worlds0.rooms.entryPoint.description;
+function addRoomDescription() {
+    descriptionDiv.innerHTML = worlds0.rooms.entryPoint.description;
 }
 
 function setRoomLocation(room) {
@@ -106,18 +107,13 @@ function setWorldLocation(world) {
 }
 
 function createLocationHeader() {
-    
     locationDiv.setAttribute('id', 'location-div');
-
     worldLocation.setAttribute('id', 'world-location');
-
     worldText.setAttribute('id', 'world-text');
     worldText.setAttribute('class', 'location-header');
     worldLocation.appendChild(worldText);
     locationDiv.appendChild(worldLocation);
-
     roomLocation.setAttribute('id', 'room-location');
-
     roomText.setAttribute('id', 'room-text');
     roomText.setAttribute('class', 'location-header');
     roomLocation.appendChild(roomText);
@@ -129,7 +125,7 @@ beginBtn.addEventListener('click', () => {
     playerInterface.removeChild(beginDiv);
     playerInput.setAttribute('placeholder', 'What Will You Do?');
     removeChildren(textDiv);
-    appendGameText();
+    addRoomDescription();
     createLocationHeader();
     setRoomLocation(worlds0.rooms.entryPoint);
     setWorldLocation(worlds0);
