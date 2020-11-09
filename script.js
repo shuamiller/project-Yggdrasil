@@ -235,7 +235,8 @@ function getName(event) {
     if (event.key === 'Enter') {
         playerCharacter.name = playerInput.value;
         const nameResponse = document.createElement('p');
-        nameResponse.textContent = `"It's good to meet you, <span class="character-text">${playerCharacter.name}</span>! I'm Greeter,Dif. Of course you'll have heard of me from before your Conver- Oh! You appear to be missing your PED. How unusual... Something's wrong. I'm sorry about the inconvenience. Normally, I'd send you to the Council, but as they've dispersed, I'll have to take care of this somehow. Meet me in the Hall,Annals across the city; We can try to figure this out there. I'm sorry the circumstances are so strange, but nonetheless... Welcome to <span class="yggdrasil">Yggdrasil</span>."</p><p class="game-text">The doorway before you to the <span class="direction-text">North</span> splits down the middle, and the two halves recede into the walls creating an opening.`;
+        nameResponse.innerHTML = `<p class="game-text">"It's good to meet you, <span class="character-text">${playerCharacter.name}</span>! I'm Greeter,Dif. Of course you'll have heard of me from before your Conver- Oh! You appear to be missing your PED. How unusual... Something's wrong. I'm sorry about the inconvenience. Normally, I'd send you to the Council, but as they've dispersed, I'll have to take care of this somehow. Meet me in the Hall,Annals across the city; We can try to figure this out there. I'm sorry the circumstances are so strange, but nonetheless... Welcome to <span class="yggdrasil">Yggdrasil</span>."</p><p class="game-text">The doorway before you to the <span class="direction-text">North</span> splits down the middle, and the two halves recede into the walls creating an opening.`;
+        actionResponseDiv.appendChild(nameResponse);
         currentRoom.directions.north.directionalAccess = true;
         removeTempEventListener();
         playerInput.value = "";
@@ -262,7 +263,9 @@ function enterRoom(aspect) {
 
 function walkDirection(aspect) {
     if (aspect === 'none' || currentRoom.directions[aspect].directionalAccess === false) {
-        textDiv.innerHTML = `<p class="game-text">There\'s nothing in that direction.</p>`;
+        let p = document.createElement('p');
+        p.innerHTML = `<p class="game-text">There\'s nothing in that direction.</p>`;
+        actionResponseDiv.appendChild(p);
     } else {
         enterRoom(aspect);
     }
@@ -273,12 +276,16 @@ function walkDirection(aspect) {
 
 function examineAspect(aspect) {
     if (aspect in currentRoom.objects) {
-        actionResponseDiv.innerHTML = currentRoom.objects[aspect].description;
+        let p = document.createElement('p');
+        p.innerHTML = currentRoom.objects[aspect].description;
+        actionResponseDiv.appendChild(p);
         if (currentRoom.objects[aspect].examinationFunction) {
             currentRoom.objects[aspect].examinationFunction();
         }
     } else if (aspect in currentRoom.characters) {
-        actionResponseDiv.innerHTML = currentRoom.characters[aspect].description;
+        let p = document.createElement('p')
+        p.innerHTML = currentRoom.characters[aspect].description;
+        actionResponseDiv.appendChild(p);
         if (currentRoom.characters[aspect].examinationFunction) {
             currentRoom.characters[aspect].examinationFunction();
         }
@@ -289,9 +296,13 @@ function takeAspect(aspect) {
     if (aspect in currentRoom.objects) {
         if (currentRoom.objects[aspect].isTakeable) {
             if (currentRoom.objects[aspect].takeText) {
-                actionResponseDiv.innerHTML = currentRoom.objects[aspect].takeText;
+                let p = document.createElement('p');
+                p.innerHTML = currentRoom.objects[aspect].takeText;
+                actionResponseDiv.appendChild(p)
             } else {
-                actionResponseDiv.innerHTML = `<p class=game-text>You pick up the ${currentRoom.objects[aspect].name}`
+                let p = document.createElement('p');
+                p.innerHTML = `<p class=game-text>You pick up the ${currentRoom.objects[aspect].name}`
+                actionResponseDiv.appendChild(p);
             }
             playerCharacter.inventory[aspect] = currentRoom.objects[aspect];
             delete currentRoom.objects[aspect];
@@ -299,14 +310,20 @@ function takeAspect(aspect) {
                 aspect.takeFunction();
             }
         } else {
-            actionResponseDiv.innerHTML = '<p class="game-text">You can\'t take that with you.</p>'
+            let p = document.createElement('p');
+            p.innerHTML = '<p class="game-text">You can\'t take that with you.</p>'
+            actionResponseDiv.appendChild(p);
         }
     } else if (aspect in currentRoom.characters) {
         if (currentRoom.objects[aspect].isTakeable) {
             if (currentRoom.objects[aspect].takeText) {
-                actionResponseDiv.innerHTML = currentRoom.objects[aspect].takeText;
+                let p = document.createElement('p');
+                p.innerHTML = currentRoom.objects[aspect].takeText;
+                actionResponseDiv.appendChild(p);
             } else {
-                actionResponseDiv.innerHTML = `<p class=game-text>You pick up the ${currentRoom.objects[aspect].name}`
+                let p = document.createElement('p');
+                p.innerHTML = `<p class=game-text>You pick up the ${currentRoom.objects[aspect].name}`
+                actionResponseDiv.appendChild(p);
             }
             playerCharacter.inventory[aspect] = currentRoom.objects[aspect];
             delete currentRoom.objects[aspect];
@@ -314,19 +331,25 @@ function takeAspect(aspect) {
                 aspect.takeFunction();
             }
         } else {
-            actionResponseDiv.innerHTML = '<p class="game-text">You can\'t take that with you.</p>'
+            let p = document.createElement('p');
+            p.innerHTML = '<p class="game-text">You can\'t take that with you.</p>'
+            actionResponseDiv.appendChild(p);
         }
     }
 }
 
 function openAspect(aspect) {
     if (aspect in currentRoom.objects) {
-        actionResponseDiv.innerHTML = currentRoom.objects[aspect].openText;
+        let p = document.createElement('p');
+        p.innerHTML = currentRoom.objects[aspect].openText;
+        actionResponseDiv.appendChild(p);
         if (aspect.openFunction) {
             aspect.openFunction();
         }
     } else if (aspect in currentRoom.characters) {
-        actionResponseDiv.innerHTML = currentRoom.characters[aspect].openText;
+        let p = document.createElement('p');
+        p.innerHTML = currentRoom.characters[aspect].openText;
+        actionResponseDiv.appendChild(p);
         if (currentRoom.characters[aspect].openFunction) {
             currentRoom.characters[aspect].openFunction();
         }
@@ -335,7 +358,9 @@ function openAspect(aspect) {
 
 function pushAspect(aspect) {
     if (aspect in currentRoom.objects) {
-        actionResponseDiv.innerHTML = currentRoom.objects[aspect].pushText;
+        let p = document.createElement('p');
+        p.innerHTML = currentRoom.objects[aspect].pushText;
+        actionResponseDiv.appendChild(p);
         if (aspect.pushFunction) {
             aspect.pushFuntion();
         }
@@ -348,7 +373,9 @@ function pushAspect(aspect) {
 
 function pullAspect(aspect) {
     if (aspect in currentRoom.objects) {
-        actionResponseDiv.innerHTML = currentRoom.objects[aspect].pullText;
+        let p = document.createElement('p');
+        p.innerHTML = currentRoom.objects[aspect].pullText;
+        actionResponseDiv.appendChild(p)
         if (aspect.pullFunction) {
             aspect.pullFunction();
         }
@@ -363,22 +390,30 @@ function pullAspect(aspect) {
 function talkToAspect(aspect) {
     if (aspect in currentRoom.objects) {
         if (currentRoom.objects[aspect].dialogue.length > 1) {
-            actionResponseDiv.innerHTML = currentRoom.objects[aspect].dialogue[0];
+            let p = document.createElement('p');
+            p.innerHTML = currentRoom.objects[aspect].dialogue[0];
+            actionResponseDiv.appendChild(p);
             currentRoom.objects[aspect].removedDialogue.push(currentRoom.objects[aspect].dialogue[0]);
             currentRoom.objects[aspect].dialogue.shift();
         } else {
-            actionResponseDiv.innerHTML = currentRoom.objects[aspect].dialogue[0]; 
+            let p = document.createElement('p');
+            p.innerHTML = currentRoom.objects[aspect].dialogue[0];
+            actionResponseDiv.appendChild(p);
         }
         if (currentRoom.objects[aspect].talkFunction) {
             currentRoom.objects[aspect].talkFunction();
         }
     } else if (aspect in currentRoom.characters) {
         if (currentRoom.characters[aspect].dialogue.length > 1) {
-            actionResponseDiv.innerHTML = currentRoom.characters[aspect].dialogue[0];
+            let p = document.createElement('p');
+            p.innerHTML = currentRoom.characters[aspect].dialogue[0];
+            actionResponseDiv.appendChild(p);
             currentRoom.characters[aspect].removedDialogue.push(currentRoom.characters[aspect].dialogue[0]);
             currentRoom.characters[aspect].dialogue.shift();
         } else {
-            actionResponseDiv.innerHTML = currentRoom.characters[aspect].dialogue[0]; 
+            let p = document.createElement('p');
+            p.innerHTML = currentRoom.characters[aspect].dialogue[0];
+            actionResponseDiv.appendChild(p);
         }
         if (currentRoom.characters[aspect].talkFunction) {
             currentRoom.characters[aspect].talkFunction();
@@ -393,7 +428,9 @@ function giveFunction(aspect, receiver) {
         actionResponseDiv.appendChild(noItemText);
     } else {
         if (!receiver.receivable.hasOwnProperty(aspect)) {
-            actionResponseDiv.appendChild(receiver.wontTakeText);
+            let p = document.createElement('p');
+            p.appendChild(receiver.wontTakeText);
+            actionResponseDiv.appendChild(p);
         } else if (receiver.receivable.hasOwnProperty(aspect)) {
             receiver.inventory.push(aspect);
             let aspectIndex = playerCharacter.inventory.indexOf(aspect);
@@ -404,27 +441,41 @@ function giveFunction(aspect, receiver) {
 
 function useAspect(aspect1, aspect2) {
     if (!playerCharacter.inventory.hasOwnProperty(aspect1)) {
-        actionResponseDiv.appendChild(`<p class="game-text">You don't have ${aspect1} with you.</p>`);
+        let p = document.createElement('p');
+        p.appendChild(`<p class="game-text">You don't have ${aspect1} with you.</p>`);
+        actionResponseDiv.appendChild(p);
     } else if (
         !playerCharacter.inventory.hasOwnProperty(aspect2) || 
         !currentRoom.objects.hasOwnProperty(aspect2) ||
         !currentRoom.characters.hasOwnProperty(aspect2)
     ){
-        actionResponseDiv.appendChild(`You don't have access to ${aspect2}`);
+        let p = document.createElement('p');
+        p.appendChild(`You don't have access to ${aspect2}`);
+        actionResponseDiv.appendChild(p);
     } else if (!currentRoom.objects[aspect2].isUseableWith.hasOwnProperty(aspect1) || !currentRoom.characters[aspect2].isUseableWith.hasOwnProperty(aspect1)) {
         if (currentRoom.objects[aspect2].hasOwnProperty(refuseToTakeText)) {
-            actionResponseDiv.appendChild(currentRoom.objects[aspect2].refuseToTakeText);
+            let p = document.createElement('p');
+            p.appendChild(currentRoom.objects[aspect2].refuseToTakeText);
+            actionResponseDiv.appendChild(p);
         } else if (currentRoom.characters[aspect2].hasOwnProperty(refuseToTakeText)) {
-            actionResponseDiv.appendChild(currentRoom.characters[aspect2].refuseToTakeText);
+            let p = document.createElement('p');
+            p.appendChild(currentRoom.characters[aspect2].refuseToTakeText);
+            actionResponseDiv.appendChild(p);
         } else {
-            actionResponseDiv.appendChild(`<p>You can't use ${aspect1} with ${aspect2}.</p>`);
+            let p = document.createElement('p');
+            p.appendChild(`<p>You can't use ${aspect1} with ${aspect2}.</p>`);
+            actionResponseDiv.appendChild(p);
         }
     } else {
         if (currentRoom.objects.hasOwnProperty(aspect2)) {
-            actionResponseDiv.appendChild(currentRoom.objects[aspect2].usables[aspect1].useText);
+            let p = document.createElement('p');
+            p.appendChild(currentRoom.objects[aspect2].usables[aspect1].useText);
+            actionResponseDiv.appendChild(p);
             
         } else if (currentRoom.characters.hasOwnProperty(aspect1)) {
-            actionResponseDiv.appendChild(currentRoom.characters[aspect2].usables[aspect1].useText);
+            let p = document.createElement('p');
+            p.appendChild(currentRoom.characters[aspect2].usables[aspect1].useText);
+            actionResponseDiv.appendChild(p);
         }
     }
 }
