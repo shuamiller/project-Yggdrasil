@@ -129,7 +129,7 @@ h1 {
     font-family: "Montserrat", monospace;
     font-weight: 200;
     font-style: italic;
-    font-size: 5em;
+    font-size: 4em;
     text-align: center;
     color: whitesmoke;
     margin: .25em auto .2em;
@@ -142,7 +142,7 @@ h1 {
     font-family: "Fira Code", monospace;
     font-weight: 300;
     font-style: normal;
-    font-size: 1.25em;
+    font-size: 1em;
     text-align: center;
     color: whitesmoke;
     margin: 0 auto 2em;
@@ -167,7 +167,7 @@ h1 {
     position: relative;
     top: 1em;
     justify-content: space-between;
-    margin: 3em 2em 0;
+    margin: 3em 2em 1em;
     padding: 0;
 }
 #worldLocation {
@@ -184,13 +184,47 @@ h1 {
     color: hsl(82, 40.8%, 60%);;
     margin: 0;
 }
-#text-div {
+#welcome-div {
     display: block;
     position: relative;
+    background-color: rgb(55, 55, 55);
     margin: 0 auto;
     border-radius: .5em;
     width: 83em;
     height: 24em;
+    overflow-y: auto;
+}
+#text-div {
+    display: block;
+    position: relative;
+    background-color: rgb(55, 55, 55);
+    margin: 0 auto;
+    border-radius: .5em;
+    width: 83em;
+    height: 11em;
+    overflow-y: auto;
+}
+#description-div {
+    display: block;
+    position: relative;
+    top: 1em;
+    background-color: rgb(55, 55, 55);
+    margin: 0 1em 2em;
+    padding: 0 1em;
+    border-radius: .5em;
+    width: 83em;
+    height: 12em;
+    overflow-y: auto;
+}
+#action-response-div {
+    display: block;
+    position: relative;
+    background-color: rgb(55, 55, 55);
+    margin: 0 1em 2em;
+    padding: 0 1em;
+    border-radius: .5em;
+    width: 83em;
+    height: 12em;
     overflow-y: auto;
 }
 #welcome-message {
