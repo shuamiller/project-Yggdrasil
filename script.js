@@ -231,6 +231,14 @@ function checkInput(event) {
     }
 }
 
+function checkGameInfo(event) {
+    if (event.key === 'Enter') {
+        if (gameInfo.childElementCount > 51) {
+            gameInfo.removeChild(firstChild);
+        }
+    }
+}
+
 function getName(event) {
     if (event.key === 'Enter') {
         playerCharacter.name = playerInput.value;
@@ -244,6 +252,7 @@ function getName(event) {
 }
 
 playerInput.addEventListener('keypress', checkInput); // Recieve input and trigger action parser
+playerInput.addEventListener('keypress', checkGameInfo); // Limit Game Info messages to 50
 
 function removeTempEventListener() {
     playerInput.removeEventListener('keypress', getName);
