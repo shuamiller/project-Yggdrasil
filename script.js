@@ -236,6 +236,7 @@ function checkGameInfo(event) {
         if (gameInfo.childElementCount > 51) {
             gameInfo.removeChild(firstChild);
         }
+        actionResponseDiv.scrollTop = actionResponseDiv.scrollHeight - actionResponseDiv.clientHeight;
     }
 }
 
@@ -245,6 +246,7 @@ function getName(event) {
         const nameResponse = document.createElement('p');
         nameResponse.innerHTML = `<p class="game-text">"It's good to meet you, <span class="character-text">${playerCharacter.name}</span>! I'm Greeter,Dif. Of course you'll have heard of me from before your Conver- Oh! You appear to be missing your PED. How unusual... Something's wrong. I'm sorry about the inconvenience. Normally, I'd send you to the Council, but as they've dispersed, I'll have to take care of this somehow. Meet me in the Hall,Annals across the city; We can try to figure this out there. I'm sorry the circumstances are so strange, but nonetheless... Welcome to <span class="yggdrasil">Yggdrasil</span>."</p><p class="game-text">The doorway before you to the <span class="direction-text">North</span> splits down the middle, and the two halves recede into the walls creating an opening.`;
         actionResponseDiv.appendChild(nameResponse);
+        actionResponseDiv.scrollTop = actionResponseDiv.scrollHeight - actionResponseDiv.clientHeight;
         currentRoom.directions.north.directionalAccess = true;
         removeTempEventListener();
         playerInput.value = "";
@@ -268,6 +270,7 @@ function enterRoom(aspect) {
     currentRoom = worlds0.rooms[newAspect];
     setRoomLocation(currentRoom);
     showRoomDescription(currentRoom);
+    actionResponseDiv.scrollTop = actionResponseDiv.scrollHeight - actionResponseDiv.clientHeight;
 }
 
 function walkDirection(aspect) {
